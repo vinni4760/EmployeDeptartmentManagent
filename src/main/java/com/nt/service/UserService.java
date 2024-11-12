@@ -42,6 +42,16 @@ public class UserService {
          return users;
      }
 
+     public List<User> maxsalary(Double salary){
+         List<User> newuser = users.stream().
+                 filter(user -> user.getSalary()==salary).
+                 collect(Collectors.toList());
+         if(newuser.isEmpty())
+             throw new UserNotFoundException("NO Employee with Salary :/s"+salary);
+         return newuser;
+     }
+
+
 
 
 }

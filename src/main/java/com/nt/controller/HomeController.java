@@ -5,6 +5,7 @@ import com.nt.model.User;
 import com.nt.response.ApiResponse;
 import com.nt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +72,17 @@ public class HomeController {
             return  new ResponseEntity<>(new ApiResponse(e.getMessage(),null),HttpStatus.CONFLICT);
         }
     }
+    @GetMapping("/maxsal")
+    public ResponseEntity<ApiResponse> getByMaxSal(@RequestParam Double salary){
+        try{
+            List<User> users =  userService.maxsalary(salary);
+              return new ResponseEntity<ApiResponse>(new ApiResponse("Employees with Salary ",users),
+                      HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse("! Failed",e.getMessage()),HttpStatus.CONFLICT);
+        }
+    }
+
 
 
 
