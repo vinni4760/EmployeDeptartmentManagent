@@ -5,7 +5,6 @@ import com.nt.model.User;
 import com.nt.response.ApiResponse;
 import com.nt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +35,7 @@ public class HomeController {
         }
      }
 
+     
     @GetMapping("/all")
     public ResponseEntity<ApiResponse> getAllByName(@RequestParam String name){
         try {
@@ -65,6 +65,7 @@ public class HomeController {
     public ResponseEntity<ApiResponse> getAll(){
         try {
             List<User> users  =   userService.getAllUsers();
+//            System.out.println(10/0);
             return new ResponseEntity<ApiResponse>(new ApiResponse("Users :",users), HttpStatus.OK);
 
         }
@@ -72,10 +73,11 @@ public class HomeController {
             return  new ResponseEntity<>(new ApiResponse(e.getMessage(),null),HttpStatus.CONFLICT);
         }
     }
-    @GetMapping("/maxsal")
+    @GetMapping("/salgreater")
     public ResponseEntity<ApiResponse> getByMaxSal(@RequestParam Double salary){
         try{
-            List<User> users =  userService.maxsalary(salary);
+//            List<User> users =  userService.maxsalary(salary);
+            List<User> users = userService.getBySalary();
               return new ResponseEntity<ApiResponse>(new ApiResponse("Employees with Salary ",users),
                       HttpStatus.OK);
         } catch (Exception e) {
@@ -83,7 +85,16 @@ public class HomeController {
         }
     }
 
-
+    @GetMapping("/maxsal")
+    public ResponseEntity<ApiResponse> getByMaxSal(){
+        try{
+            User users =  userService.userwithmaxsalary();
+            return new ResponseEntity<ApiResponse>(new ApiResponse("Employees with Max Salary ",users),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse("! Failed",e.getMessage()),HttpStatus.CONFLICT);
+        }
+    }
 
 
 

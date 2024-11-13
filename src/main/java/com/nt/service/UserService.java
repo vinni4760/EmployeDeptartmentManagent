@@ -5,6 +5,7 @@ import com.nt.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +45,20 @@ public class UserService {
 
      public List<User> maxsalary(Double salary){
          List<User> newuser = users.stream().
-                 filter(user -> user.getSalary()==salary).
+                 filter(user -> user.getSalary()>=salary).
                  collect(Collectors.toList());
          if(newuser.isEmpty())
-             throw new UserNotFoundException("NO Employee with Salary :/s"+salary);
+             throw new UserNotFoundException("NO Employee with Salary more than :"+salary);
          return newuser;
+     }
+
+     public  User userwithmaxsalary(){
+         return users.stream().max(Comparator.comparing(User::getSalary)).get();
+     }
+
+     public List<User> getBySalary(){
+         return users.stream().sorted(Comparator.comparing(User::getSalary))
+                 .collect(Collectors.toList());
      }
 
 
