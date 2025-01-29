@@ -3,7 +3,6 @@ import com.nt.exceptions.AlreadyExistsException;
 import com.nt.exceptions.UserNotFoundException;
 import com.nt.model.User;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +19,6 @@ public class UserService {
             throw new AlreadyExistsException("! OOps User Already Exists with Id  : "+newuser.getId());
         else
             users.add(newuser);
-
          return "user add success";
      }
 
@@ -29,8 +27,6 @@ public class UserService {
                  collect(Collectors.toList());
         if(newuser.isEmpty())
             throw new UserNotFoundException("! No User Found with Name  : "+name);
-
-
          return newuser;
      }
 
@@ -60,8 +56,4 @@ public class UserService {
          return users.stream().sorted(Comparator.comparing(User::getSalary))
                  .collect(Collectors.toList());
      }
-
-
-
-
 }
